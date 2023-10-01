@@ -68,38 +68,38 @@ class Repository extends \PKP\submission\Repository
         $locale = $submission->getData('locale');
         $publication = $submission->getCurrentPublication();
 
-        $section = Repo::section()->get($submission->getCurrentPublication()->getData('sectionId'), $context->getId());
+        // $section = Repo::section()->get($submission->getCurrentPublication()->getData('sectionId'), $context->getId());
 
-        // Required abstract
-        if (!$section->getAbstractsNotRequired() && !$publication->getData('abstract', $locale)) {
-            $errors['abstract'] = [$locale => [__('validator.required')]];
-        }
+        // // Required abstract
+        // if (!$section->getAbstractsNotRequired() && !$publication->getData('abstract', $locale)) {
+        //     $errors['abstract'] = [$locale => [__('validator.required')]];
+        // }
 
-        // Abstract word limit
-        if ($section->getAbstractWordCount()) {
-            $abstracts = $publication->getData('abstract');
-            if ($abstracts) {
-                $abstractErrors = [];
-                foreach ($context->getSupportedSubmissionLocales() as $localeKey) {
-                    $abstract = $publication->getData('abstract', $localeKey);
-                    $wordCount = $abstract ? PKPString::getWordCount($abstract) : 0;
-                    if ($wordCount > $section->getAbstractWordCount()) {
-                        $abstractErrors[$localeKey] = [
-                            __(
-                                'publication.wordCountLong',
-                                [
-                                    'limit' => $section->getAbstractWordCount(),
-                                    'count' => $wordCount
-                                ]
-                            )
-                        ];
-                    }
-                }
-                if (count($abstractErrors)) {
-                    $errors['abstract'] = $abstractErrors;
-                }
-            }
-        }
+        // // Abstract word limit
+        // if ($section->getAbstractWordCount()) {
+        //     $abstracts = $publication->getData('abstract');
+        //     if ($abstracts) {
+        //         $abstractErrors = [];
+        //         foreach ($context->getSupportedSubmissionLocales() as $localeKey) {
+        //             $abstract = $publication->getData('abstract', $localeKey);
+        //             $wordCount = $abstract ? PKPString::getWordCount($abstract) : 0;
+        //             if ($wordCount > $section->getAbstractWordCount()) {
+        //                 $abstractErrors[$localeKey] = [
+        //                     __(
+        //                         'publication.wordCountLong',
+        //                         [
+        //                             'limit' => $section->getAbstractWordCount(),
+        //                             'count' => $wordCount
+        //                         ]
+        //                     )
+        //                 ];
+        //             }
+        //         }
+        //         if (count($abstractErrors)) {
+        //             $errors['abstract'] = $abstractErrors;
+        //         }
+        //     }
+        // }
 
         return $errors;
     }
