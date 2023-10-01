@@ -166,6 +166,7 @@ class ArticleReportPlugin extends ReportPlugin
             // Store the submission results
             $results[] = [
                 'submissionId' => $submission->getId(),
+                'internalId' => $submission->getData('internalId'),
                 'title' => htmlspecialchars($publication->getLocalizedFullTitle(null, 'html')),
                 'abstract' => html_entity_decode(strip_tags($publication->getLocalizedData('abstract'))),
                 'authors' => array_map(function ($author) {
@@ -204,6 +205,7 @@ class ArticleReportPlugin extends ReportPlugin
         // Build and display the column headers.
         $columns = [
             __('article.submissionId'),
+            'Internal ID',
             __('article.title'),
             __('article.abstract')
         ];
